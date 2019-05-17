@@ -10,7 +10,22 @@ const {
   validateLoginInput
 } = require("../../utils/validation");
 
-const User = require("../../models/User");
+const User = require("../../models/user");
+
+router.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["https://www.googleapis.com/auth/plus.login"]
+  })
+);
+
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  (req, res) => {
+    res.redirect("/");
+  }
+);
 
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);

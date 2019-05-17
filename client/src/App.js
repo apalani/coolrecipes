@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
+import Notifications from "react-notify-toast";
 import store from "./store";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
@@ -29,6 +30,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App container">
+            <Notifications />
             <Navbar />
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />

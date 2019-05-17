@@ -16,10 +16,14 @@ class Navbar extends Component {
 
     return (
       <nav className="z-depth-0">
-        <div className="nav-wrapper white">
+        <div
+          className="nav-wrapper white"
+          style={{ borderBottom: "1px solid #666" }}
+        >
           {isLoggedIn ? (
             <React.Fragment>
               <Link
+                to="/"
                 style={{
                   fontSize: "15px",
                   padding: "0px 10px"
@@ -30,6 +34,7 @@ class Navbar extends Component {
                 LOGOUT
               </Link>
               <Link
+                to="/dashboard"
                 style={{
                   fontSize: "15px",
                   padding: "0px 10px",

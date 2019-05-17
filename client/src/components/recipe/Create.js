@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
+import { createRecipe } from "../../actions/recipeActions";
 import classnames from "classnames";
-class Register extends Component {
+
+class Create extends Component {
   constructor() {
     super();
     this.state = {
@@ -133,16 +134,19 @@ class Register extends Component {
     );
   }
 }
-Register.propTypes = {
-  registerUser: PropTypes.func.isRequired,
+
+Create.propTypes = {
+  createRecipe: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
+
 const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors
 });
+
 export default connect(
   mapStateToProps,
-  { registerUser }
-)(withRouter(Register));
+  { createRecipe }
+)(withRouter(Create));
