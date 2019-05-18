@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 
 import { loginGoogleUser } from "../../actions/authActions";
-import { GoogleLogin } from 'react-google-login';
-import config from '../../config.json';
+import { GoogleLogin } from "react-google-login";
+import config from "../../config.json";
 
 import classnames from "classnames";
 class Login extends Component {
@@ -45,8 +45,7 @@ class Login extends Component {
     this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
   };
 
-  googleResponse = (response) => {
-
+  googleResponse = response => {
     const profile = response.profileObj;
 
     const userData = {
@@ -56,13 +55,12 @@ class Login extends Component {
       accessToken: response.accessToken
     };
     this.props.loginGoogleUser(userData);
+  };
 
-  }
-
-  onFailure = (error) => {
+  onFailure = error => {
     console.log("Google signin error");
     console.log(error);
-  }
+  };
   render() {
     const { errors } = this.state;
     return (
@@ -76,7 +74,6 @@ class Login extends Component {
               <p className="grey-text text-darken-1">
                 Don't have an account? <Link to="/register">Register</Link>
               </p>
-              
             </div>
             <form noValidate onSubmit={this.onSubmit}>
               <div className="input-field col s12">
@@ -115,25 +112,23 @@ class Login extends Component {
               </div>
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                 <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem"
-                  }}
                   type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                  className="waves-effect green hoverable waves-light btn-small"
                 >
-                  Login
+                  <i className="material-icons left">send</i>Login
                 </button>
-              </div>
-              <div className="google-signin">
-              <GoogleLogin
-                      clientId={config.GOOGLE_CLIENT_ID}
-                      buttonText="Sign in with Google"
-                      onSuccess={this.googleResponse}
-                      onFailure={this.onFailure}
+
+                <div
+                  className="google-signin hoverable z-depth-1"
+                  style={{ marginTop: "10px", width: "181px" }}
+                >
+                  <GoogleLogin
+                    clientId={config.GOOGLE_CLIENT_ID}
+                    buttonText="Sign in with Google"
+                    onSuccess={this.googleResponse}
+                    onFailure={this.onFailure}
                   />
+                </div>
               </div>
             </form>
           </div>
