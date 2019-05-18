@@ -6,12 +6,11 @@ import RecipeDetails from "./RecipeDetails";
 
 const Recipe = ({ getRecipeById, recipe, auth, match }) => {
   useEffect(() => {
-    console.log(match.params.id);
     getRecipeById(match.params.id);
   }, [getRecipeById, match.params.id]);
   return (
     <Fragment>
-      <RecipeDetails recipe={recipe} />
+      <RecipeDetails recipe={recipe} auth={auth} />
     </Fragment>
   );
 };

@@ -10,7 +10,7 @@ class Recipes extends Component {
       <div>
         {allRecipes.map(recipe => (
           <div className="col s12 m6 l4" key={recipe._id}>
-            <div className="card z-depth-3">
+            <div className="card z-depth-3 hoverable">
               <div className="card-image waves-effect waves-block waves-light">
                 <Link to={`/recipe/${recipe._id}`}>
                   <img

@@ -1,28 +1,35 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import Recipes from "../recipe/Recipes";
+import { getAllRecipesByUser } from "../../actions/recipeActions";
 
-class Dashboard extends Component {
-  render() {
-    const { user } = this.props.auth;
+const Dashboard = ({ getAllRecipesByUser, recipe: { recipes }, match }) => {
+  useEffect(() => {
+    getAllRecipesByUser(match.params.id);
+  }, [getAllRecipesByUser, match.params.id]);
 
-    return (
-      <div style={{ height: "75vh" }} className="container valign-wrapper">
-        <div className="row">
-          <div className="col s12 center-align">
-            <h4>
-              <b>Hey there,</b> {user.name.split(" ")[0]}
-            </h4>
-          </div>
+  return (
+    <div className="section">
+      <div className="row">
+        <div className="col s12">
+          <Recipes allRecipes={recipes} />
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
 Dashboard.propTypes = {
+  getAllRecipesByUser: PropTypes.func.isRequired,
+  recipe: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  recipe: state.recipe
 });
-export default connect(mapStateToProps)(Dashboard);
+export default connect(
+  mapStateToProps,
+  { getAllRecipesByUser }
+)(Dashboard);

@@ -13,6 +13,16 @@ router.get("/all", async (req, res) => {
   }
 });
 
+router.get("/all/:id", async (req, res) => {
+  try {
+    const recipes = await Recipe.find({ postedBy: req.params.id });
+    res.json(recipes);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error Fetching All Recipes By User");
+  }
+});
+
 router.get("/detail/:id", async (req, res) => {
   try {
     const recipe = await Recipe.findOne({ _id: req.params.id });

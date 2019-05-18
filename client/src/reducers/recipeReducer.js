@@ -1,4 +1,8 @@
-import { FETCH_ALL_RECIPES, GET_RECIPE_BY_ID } from "../actions/types";
+import {
+  GET_ALL_RECIPES,
+  GET_ALL_RECIPES_BY_USER,
+  GET_RECIPE_BY_ID
+} from "../actions/types";
 
 const initialState = {
   recipes: [],
@@ -9,7 +13,13 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case FETCH_ALL_RECIPES:
+    case GET_ALL_RECIPES:
+      return {
+        ...state,
+        recipes: payload
+      };
+
+    case GET_ALL_RECIPES_BY_USER:
       return {
         ...state,
         recipes: payload

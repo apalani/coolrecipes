@@ -34,7 +34,7 @@ class Navbar extends Component {
                 LOGOUT
               </Link>
               <Link
-                to="/dashboard"
+                to={`/dashboard/${user.id}`}
                 style={{
                   fontSize: "15px",
                   padding: "0px 10px",

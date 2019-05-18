@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Recipes from "../recipe/Recipes";
-import { fetchAllRecipes } from "../../actions/recipeActions";
+import { getAllRecipes } from "../../actions/recipeActions";
 
-const Landing = ({ fetchAllRecipes, recipe: { recipes } }) => {
+const Landing = ({ getAllRecipes, recipe: { recipes } }) => {
   useEffect(() => {
-    fetchAllRecipes();
-  }, [fetchAllRecipes]);
+    getAllRecipes();
+  }, [getAllRecipes]);
 
   return (
     <div className="section">
@@ -21,7 +21,7 @@ const Landing = ({ fetchAllRecipes, recipe: { recipes } }) => {
 };
 
 Landing.propTypes = state => ({
-  fetchAllRecipes: PropTypes.func.isRequired,
+  getAllRecipes: PropTypes.func.isRequired,
   recipe: PropTypes.object.isRequired
 });
 
@@ -31,5 +31,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchAllRecipes }
+  { getAllRecipes }
 )(Landing);
