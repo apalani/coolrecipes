@@ -69,7 +69,8 @@ router.post("/create", async (req, res) => {
       category,
       imageUrl,
       videoUrl,
-      ratings
+      ratings,
+      postedBy
     } = req.body;
 
     const newRecipe = new Recipe({
@@ -85,12 +86,15 @@ router.post("/create", async (req, res) => {
       ratings: {
         count: ratings ? ratings.count : 0,
         value: ratings ? ratings.value : 0
-      }
+      },
+      postedBy
     });
 
     newRecipe
       .save()
-      .then(recipe => res.json(recipe))
+      .then(recipe => {
+        res.json(recipe);
+      })
       .catch(err => console.log(err));
   }
 });

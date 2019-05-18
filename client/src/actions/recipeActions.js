@@ -5,7 +5,7 @@ import {
   GET_RECIPE_BY_ID,
   GET_ERRORS,
   DELETE_RECIPE_BY_ID,
-  CREATE_RECIPE
+  ADD_RECIPE
 } from "./types";
 import { notify } from "react-notify-toast";
 
@@ -78,15 +78,16 @@ export const deleteRecipeById = id => dispatch => {
     });
 };
 
-export const createRecipe = recipeData => dispatch => {
+export const addRecipe = (recipeData, history) => dispatch => {
   axios
     .post(`/api/recipe/create`, recipeData)
     .then(response => {
       notify.show("Recipe added successfully!", "success");
       dispatch({
-        type: CREATE_RECIPE,
+        type: ADD_RECIPE,
         payload: response.data
       });
+      history.push("/");
     })
     .catch(err => {
       dispatch({

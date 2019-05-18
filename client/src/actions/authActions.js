@@ -63,7 +63,6 @@ export const loginUser = userData => dispatch => {
 };
 
 export const loginGoogleUser = userData => dispatch => {
-  console.log("Google Email: " + userData.email);
   axios
     .post("/api/user/googlelogin", userData)
     .then(res => {
@@ -98,4 +97,5 @@ export const logoutUser = () => dispatch => {
   localStorage.removeItem("jwtToken");
   setAuthToken(false);
   dispatch(setCurrentUser({}));
+  window.location.href = "/login";
 };

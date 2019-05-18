@@ -37,14 +37,12 @@ class RecipeDetails extends Component {
               <div className="col s4">
                 {isLoggedIn ? (
                   <h4 className="right">
-                    <button
+                    {/* <button
                       onClick={() => this.deleteRecipe(recipe._id)}
                       className="waves-effect green waves-light btn-small"
                     >
                       <i className="material-icons left">edit</i>Edit
-                    </button>
-
-                    {"    "}
+                    </button> */}
                     <button
                       onClick={() => this.deleteRecipe(recipe._id)}
                       className="waves-effect red waves-light btn-small"
@@ -127,9 +125,9 @@ class RecipeDetails extends Component {
             <div className="row">
               <div className="col s12">
                 <ul className="collection">
-                  {recipe.ingredients.map(ingredient => (
-                    <li className="collection-item" key={ingredient._id}>
-                      {ingredient.name} <i>({ingredient.quantity})</i>
+                  {recipe.ingredients.map((ingredient, index) => (
+                    <li className="collection-item" key={index}>
+                      {ingredient}
                     </li>
                   ))}
                 </ul>
@@ -163,7 +161,7 @@ class RecipeDetails extends Component {
             </div>
           </div>
         ) : (
-          <div>Loading...</div>
+          ""
         )}
         <div />
       </div>

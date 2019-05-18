@@ -11,18 +11,7 @@ const RecipeSchema = new Schema(
       type: String,
       required: true
     },
-    ingredients: [
-      {
-        name: {
-          type: String,
-          required: true
-        },
-        quantity: {
-          type: String,
-          required: true
-        }
-      }
-    ],
+    ingredients: [String],
     description: [String],
     prepTimeinMins: {
       type: Number,

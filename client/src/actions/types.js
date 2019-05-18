@@ -5,5 +5,5 @@ export const GET_USER_NAME = "GET_USER_NAME";
 export const GET_ALL_RECIPES = "GET_ALL_RECIPES";
 export const GET_ALL_RECIPES_BY_USER = "GET_ALL_RECIPES_BY_USER";
 export const GET_RECIPE_BY_ID = "GET_RECIPE_BY_ID";
-export const CREATE_RECIPE = "CREATE_RECIPE";
+export const ADD_RECIPE = "ADD_RECIPE";
 export const DELETE_RECIPE_BY_ID = "DELETE_RECIPE_BY_ID";

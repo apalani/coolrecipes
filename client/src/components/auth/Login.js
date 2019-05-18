@@ -58,7 +58,6 @@ class Login extends Component {
   };
 
   onFailure = error => {
-    console.log("Google signin error");
     console.log(error);
   };
   render() {

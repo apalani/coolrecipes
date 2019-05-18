@@ -1,130 +1,141 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { createRecipe } from "../../actions/recipeActions";
-import classnames from "classnames";
+import { addRecipe } from "../../actions/recipeActions";
 
 class CreateRecipe extends Component {
   constructor() {
     super();
     this.state = {
       name: "",
-      email: "",
-      password: "",
-      password2: "",
-      errors: {}
+      category: "",
+      prepTimeinMins: 0,
+      cookTimeinMins: 0,
+      serves: 0,
+      imageUrl: "",
+      videoUrl: "",
+      description: [],
+      ingredients: []
     };
-  }
-  componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
   }
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
   onSubmit = e => {
     e.preventDefault();
-    const newUser = {
+    const newRecipe = {
       name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2
+      category: this.state.category,
+      prepTimeinMins: this.state.prepTimeinMins,
+      cookTimeinMins: this.state.cookTimeinMins,
+      serves: this.state.serves,
+      imageUrl: this.state.imageUrl,
+      videoUrl: this.state.videoUrl,
+      description: this.state.description,
+      ingredients: this.state.ingredients,
+      postedBy: this.props.auth.user.id
     };
-    this.props.registerUser(newUser, this.props.history);
+    this.props.addRecipe(newRecipe, this.props.history);
   };
   render() {
-    const { errors } = this.state;
     return (
       <div className="container">
         <div style={{ marginTop: "1rem" }} className="row">
-          <div className="col s8 offset-s2">
-            <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+          <div className="col s12">
+            <div className="col s12">
               <h4>
-                <b>Register</b>
+                <b>Create Recipe</b>
               </h4>
-              <p className="grey-text text-darken-1">
-                Already have an account? <Link to="/login">Log in</Link>
-              </p>
             </div>
             <form noValidate onSubmit={this.onSubmit}>
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
                   value={this.state.name}
-                  error={errors.name}
                   id="name"
                   type="text"
-                  className={classnames("", {
-                    invalid: errors.name
-                  })}
                 />
-                <label htmlFor="name">Name</label>
-                <span className="red-text">{errors.name}</span>
+                <label htmlFor="name">Recipe Name</label>
               </div>
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
-                  value={this.state.email}
-                  error={errors.email}
-                  id="email"
-                  type="email"
-                  className={classnames("", {
-                    invalid: errors.email
-                  })}
+                  value={this.state.category}
+                  id="category"
+                  type="text"
                 />
-                <label htmlFor="email">Email</label>
-                <span className="red-text">{errors.email}</span>
+                <label htmlFor="category">Category</label>
+              </div>
+              <div className="input-field col s4">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.prepTimeinMins}
+                  id="prepTimeinMins"
+                  type="text"
+                />
+                <label htmlFor="prepTimeinMins">Prep Time</label>
+              </div>
+              <div className="input-field col s4">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.cookTimeinMins}
+                  id="cookTimeinMins"
+                  type="text"
+                />
+                <label htmlFor="cookTimeinMins">Cook Time</label>
+              </div>
+              <div className="input-field col s4">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.serves}
+                  id="serves"
+                  type="text"
+                />
+                <label htmlFor="serves">Serves</label>
               </div>
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
-                  value={this.state.password}
-                  error={errors.password}
-                  id="password"
-                  type="password"
-                  className={classnames("", {
-                    invalid: errors.password
-                  })}
+                  value={this.state.description}
+                  id="description"
+                  type="text"
                 />
-                <label htmlFor="password">Password</label>
-                <span className="red-text">{errors.password}</span>
+                <label htmlFor="description">Direction</label>
               </div>
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
-                  value={this.state.password2}
-                  error={errors.password2}
-                  id="password2"
-                  type="password"
-                  className={classnames("", {
-                    invalid: errors.password2
-                  })}
+                  value={this.state.ingredients}
+                  id="ingredients"
+                  type="text"
                 />
-                <label htmlFor="password2">Confirm Password</label>
-                <span className="red-text">{errors.password2}</span>
+                <label htmlFor="videoUrl">Ingredients</label>
+              </div>
+              <div className="input-field col s6">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.imageUrl}
+                  id="imageUrl"
+                  type="text"
+                />
+                <label htmlFor="imageUrl">Image URL</label>
+              </div>
+              <div className="input-field col s6">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.videoUrl}
+                  id="videoUrl"
+                  type="text"
+                />
+                <label htmlFor="videoUrl">Video URL</label>
               </div>
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>
                 <button
-                  style={{
-                    width: "150px",
-                    borderRadius: "3px",
-                    letterSpacing: "1.5px",
-                    marginTop: "1rem"
-                  }}
                   type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                  className="waves-effect green hoverable waves-light btn-small"
                 >
-                  Sign up
+                  <i className="material-icons left">add</i>Create Recipe
                 </button>
               </div>
             </form>
@@ -136,17 +147,15 @@ class CreateRecipe extends Component {
 }
 
 CreateRecipe.propTypes = {
-  createRecipe: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  addRecipe: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
+  auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { createRecipe }
+  { addRecipe }
 )(withRouter(CreateRecipe));

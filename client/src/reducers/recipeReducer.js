@@ -3,7 +3,7 @@ import {
   GET_ALL_RECIPES_BY_USER,
   GET_RECIPE_BY_ID,
   DELETE_RECIPE_BY_ID,
-  CREATE_RECIPE
+  ADD_RECIPE
 } from "../actions/types";
 
 const initialState = {
@@ -34,7 +34,7 @@ export default function(state = initialState, action) {
         recipe: payload
       };
 
-    case CREATE_RECIPE:
+    case ADD_RECIPE:
       return {
         ...state,
         recipe: payload
