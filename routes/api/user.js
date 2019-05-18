@@ -27,6 +27,79 @@ router.get(
   }
 );
 
+
+router.post("/googlelogin", (req, res) => {
+  const email = req.body.email;
+  // const name = req.body.name;
+  // const googleId = req.body.googleId;
+
+  console.log("Server googlelogin "+ email);
+
+  User.findOne({ email }).then(user => {
+    if (!user) {
+      // var errorMsg = "Gmail user " + email + " not found in the DB";
+      // return res.status(404).json({ emailnotfound: errorMsg });
+
+      const newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        googleId: req.body.googleId
+      });
+
+      newUser
+            .save()
+            .then(user => {
+              const payload = {
+                id: user.id,
+                name: user.name
+              };
+              jwt.sign(
+                payload,
+                keys.secretOrKey,
+                {
+                  expiresIn: 31556926
+                },
+                (err, token) => {
+                  res.json({ success: true, token: "Bearer " + token });
+                }
+              );
+            })
+            .catch(err => console.log(err));
+
+    }
+    else {
+      console.log("User found: ");
+      // Check google ID of the user if it matches send success
+      if (req.body.googleId == user.googleId) {
+        console.log("User matches");
+
+        const payload = {
+          id: user.id,
+          name: user.name
+        };
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          {
+            expiresIn: 31556926
+          },
+          (err, token) => {
+            res.json({ success: true, token: "Bearer " + token });
+          }
+        );
+      }
+      else {
+        var errorMsg = "Gmail user " + email + " not found in the DB";
+        return res.status(404).json({ emailnotfound: errorMsg });
+      }
+      
+    }
+      
+  });
+
+
+});
+
 router.get("/name/:id", async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.params.id });
@@ -68,6 +141,7 @@ router.post("/register", (req, res) => {
     }
   });
 });
+
 
 router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);

@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
+
+import { loginGoogleUser } from "../../actions/authActions";
+import { GoogleLogin } from 'react-google-login';
+import config from '../../config.json';
+
 import classnames from "classnames";
 class Login extends Component {
   constructor() {
@@ -39,6 +44,25 @@ class Login extends Component {
     };
     this.props.loginUser(userData); // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
   };
+
+  googleResponse = (response) => {
+
+    const profile = response.profileObj;
+
+    const userData = {
+      email: profile.email,
+      name: profile.givenName + " " + profile.familyName,
+      googleId: response.googleId,
+      accessToken: response.accessToken
+    };
+    this.props.loginGoogleUser(userData);
+
+  }
+
+  onFailure = (error) => {
+    console.log("Google signin error");
+    console.log(error);
+  }
   render() {
     const { errors } = this.state;
     return (
@@ -52,9 +76,7 @@ class Login extends Component {
               <p className="grey-text text-darken-1">
                 Don't have an account? <Link to="/register">Register</Link>
               </p>
-              <p className="grey-text text-darken-1">
-                <a href="/auth/google">Sign In with Google</a>
-              </p>
+              
             </div>
             <form noValidate onSubmit={this.onSubmit}>
               <div className="input-field col s12">
@@ -105,6 +127,14 @@ class Login extends Component {
                   Login
                 </button>
               </div>
+              <div className="google-signin">
+              <GoogleLogin
+                      clientId={config.GOOGLE_CLIENT_ID}
+                      buttonText="Sign in with Google"
+                      onSuccess={this.googleResponse}
+                      onFailure={this.onFailure}
+                  />
+              </div>
             </form>
           </div>
         </div>
@@ -123,5 +153,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { loginUser }
+  { loginUser, loginGoogleUser }
 )(Login);
