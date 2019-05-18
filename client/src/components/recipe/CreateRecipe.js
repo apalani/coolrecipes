@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { createRecipe } from "../../actions/recipeActions";
 import classnames from "classnames";
 
-class Create extends Component {
+class CreateRecipe extends Component {
   constructor() {
     super();
     this.state = {
@@ -135,7 +135,7 @@ class Create extends Component {
   }
 }
 
-Create.propTypes = {
+CreateRecipe.propTypes = {
   createRecipe: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -149,4 +149,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { createRecipe }
-)(withRouter(Create));
+)(withRouter(CreateRecipe));

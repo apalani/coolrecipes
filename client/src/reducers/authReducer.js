@@ -11,12 +11,14 @@ const initialState = {
   userName: ""
 };
 export default function(state = initialState, action) {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case SET_CURRENT_USER:
       return {
         ...state,
-        isAuthenticated: !isEmpty(action.payload),
-        user: action.payload
+        isAuthenticated: !isEmpty(payload),
+        user: payload
       };
     case USER_LOADING:
       return {
@@ -26,7 +28,7 @@ export default function(state = initialState, action) {
     case GET_USER_NAME:
       return {
         ...state,
-        userName: action.payload
+        userName: payload
       };
     default:
       return state;

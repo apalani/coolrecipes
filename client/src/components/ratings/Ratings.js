@@ -24,7 +24,7 @@ class Ratings extends Component {
             </div>
           </div>
         </div>
-        <div>({ratings.count})</div>
+        <div className="starRatingCount">({ratings.count})</div>
       </Fragment>
     );
   }

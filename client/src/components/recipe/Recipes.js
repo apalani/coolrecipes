@@ -45,6 +45,9 @@ class Recipes extends Component {
 
                 <Ratings ratings={recipe.ratings} />
                 <ul>
+                  <li>
+                    <h6>{recipe.category}</h6>
+                  </li>
                   <li>Serves: {recipe.serves}</li>
                   <li>Preparation Time: {recipe.prepTimeinMins} Mins</li>
                   <li>Cooking Time: {recipe.cookTimeinMins} Mins</li>

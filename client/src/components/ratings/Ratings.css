@@ -24,3 +24,12 @@
 .starRating i {
   margin: 0 1px;
 }
+
+.starRatingCount {
+  display: inline-block;
+  font-size: 18px;
+}
+
+.fa {
+  font-size: 21px;
+}

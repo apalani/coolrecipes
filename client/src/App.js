@@ -13,6 +13,7 @@ import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import Recipe from "./components/recipe/Recipe";
+import CreateRecipe from "./components/recipe/CreateRecipe";
 
 if (localStorage.jwtToken) {
   const token = localStorage.jwtToken;
@@ -40,6 +41,11 @@ class App extends Component {
             <Route exact path="/recipe/:id" component={Recipe} />
             <Switch>
               <PrivateRoute exact path="/dashboard/:id" component={Dashboard} />
+              <PrivateRoute
+                exact
+                path="/recipe/create"
+                component={CreateRecipe}
+              />
             </Switch>
           </div>
         </Router>

@@ -1,11 +1,21 @@
 import React, { Component } from "react";
-
+import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { deleteRecipeById } from "../../actions/recipeActions";
+import Ratings from "../ratings/Ratings";
 class RecipeDetails extends Component {
+  deleteRecipe = async id => {
+    await this.props.deleteRecipeById(id);
+    this.props.history.push(`/`);
+  };
+
   render() {
     const { auth } = this.props;
     const { recipe } = this.props.recipe;
 
     let isLoggedIn = false;
+
     if (
       auth.isAuthenticated &&
       auth.user &&
@@ -21,25 +31,26 @@ class RecipeDetails extends Component {
         {recipe ? (
           <div className="section">
             <div className="row">
-              <div className="col s9">
+              <div className="col s8">
                 <h4>{recipe.name}</h4>
               </div>
-              <div className="col s3">
+              <div className="col s4">
                 {isLoggedIn ? (
                   <h4 className="right">
-                    <i
-                      style={{ verticalAlign: "text-bottom" }}
-                      className="material-icons"
+                    <button
+                      onClick={() => this.deleteRecipe(recipe._id)}
+                      className="waves-effect green waves-light btn-small"
                     >
-                      edit
-                    </i>
+                      <i className="material-icons left">edit</i>Edit
+                    </button>
+
                     {"    "}
-                    <i
-                      style={{ verticalAlign: "text-bottom" }}
-                      className="material-icons"
+                    <button
+                      onClick={() => this.deleteRecipe(recipe._id)}
+                      className="waves-effect red waves-light btn-small"
                     >
-                      delete
-                    </i>
+                      <i className="material-icons left">delete</i>Delete
+                    </button>
                   </h4>
                 ) : (
                   ""
@@ -70,7 +81,7 @@ class RecipeDetails extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col s12">
+              <div className="col s8">
                 <h6>
                   <i
                     style={{ verticalAlign: "text-bottom" }}
@@ -83,9 +94,20 @@ class RecipeDetails extends Component {
                   {recipe.prepTimeinMins + recipe.cookTimeinMins}m
                 </h6>
               </div>
+              <div className="col s4">
+                <h6 className="right">
+                  <i
+                    style={{ verticalAlign: "text-bottom" }}
+                    className="material-icons"
+                  >
+                    turned_in_not
+                  </i>{" "}
+                  {recipe.category}
+                </h6>
+              </div>
             </div>
             <div className="row">
-              <div className="col s12">
+              <div className="col s6">
                 <h5>
                   <i
                     style={{ verticalAlign: "text-bottom" }}
@@ -95,6 +117,15 @@ class RecipeDetails extends Component {
                   </i>{" "}
                   Ingredients
                 </h5>
+              </div>
+              <div className="col s6">
+                <h5 className="right">
+                  <Ratings ratings={recipe.ratings} />
+                </h5>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col s12">
                 <ul className="collection">
                   {recipe.ingredients.map(ingredient => (
                     <li className="collection-item" key={ingredient._id}>
@@ -140,4 +171,16 @@ class RecipeDetails extends Component {
   }
 }
 
-export default RecipeDetails;
+RecipeDetails.propTypes = {
+  deleteRecipeById: PropTypes.func.isRequired,
+  recipe: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  recipe: state.recipe,
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+  { deleteRecipeById }
+)(withRouter(RecipeDetails));

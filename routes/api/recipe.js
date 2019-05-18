@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Recipe = require("../../models/recipe");
+const User = require("../../models/user");
 
 router.get("/all", async (req, res) => {
   try {
@@ -30,6 +31,25 @@ router.get("/detail/:id", async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error Fetching Recipe By Id");
+  }
+});
+
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+
+    if (!recipe) {
+      return res.status(404).json({ msg: "Recipe not found" });
+    }
+
+    await recipe.remove();
+    res.json({ msg: "Recipe removed" });
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Recipe not found" });
+    }
+    res.status(500).send("Server Error Deleting Recipe By Id");
   }
 });
 
@@ -72,24 +92,6 @@ router.post("/create", async (req, res) => {
       .save()
       .then(recipe => res.json(recipe))
       .catch(err => console.log(err));
-  }
-});
-
-router.delete("/delete/:id", async (req, res) => {
-  let id = req.params.id;
-
-  if (mongoose.Types.ObjectId.isValid(id)) {
-    let result = await Recipe.deleteOne({ _id: id });
-
-    if (result.deletedCount > 0) {
-      res.json({
-        result: `Recipe with id: ${id} has been deleted successfully!`
-      });
-    } else {
-      res.status(400).json({ result: "Recipe not found!" });
-    }
-  } else {
-    res.status(400).json({ result: "Invalid recipe id!" });
   }
 });
 

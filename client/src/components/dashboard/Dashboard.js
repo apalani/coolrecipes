@@ -13,7 +13,11 @@ const Dashboard = ({ getAllRecipesByUser, recipe: { recipes }, match }) => {
     <div className="section">
       <div className="row">
         <div className="col s12">
-          <Recipes allRecipes={recipes} />
+          {recipes.length > 0 ? (
+            <Recipes allRecipes={recipes} />
+          ) : (
+            <h6>No Recipe Found!</h6>
+          )}
         </div>
       </div>
     </div>
