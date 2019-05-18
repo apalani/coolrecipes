@@ -27,6 +27,19 @@ router.get(
   }
 );
 
+router.get("/name/:id", async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) {
+      res.status(400).json("User not found!");
+    }
+    res.json(user.name);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 

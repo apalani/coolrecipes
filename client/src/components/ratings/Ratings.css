@@ -1,0 +1,26 @@
+.starRating {
+  float: left;
+  margin-right: 5px;
+  display: flex;
+  font-size: 16px;
+  justify-content: left;
+  margin-top: 3px;
+}
+
+.starRatingBottom {
+  display: flex;
+  position: relative;
+  color: #e7711b;
+}
+
+.starRatingTop {
+  display: flex;
+  color: #e7711b;
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+}
+
+.starRating i {
+  margin: 0 1px;
+}

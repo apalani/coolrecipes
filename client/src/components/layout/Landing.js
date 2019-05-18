@@ -1,32 +1,35 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import Recipes from "../recipe/Recipes";
+import { fetchAllRecipes } from "../../actions/recipeActions";
 
-class Landing extends Component {
-  constructor(props) {
-    super(props);
+const Landing = ({ fetchAllRecipes, recipe: { recipes } }) => {
+  useEffect(() => {
+    fetchAllRecipes();
+  }, [fetchAllRecipes]);
 
-    this.state = {
-      recipes: []
-    };
-  }
-
-  componentDidMount() {
-    fetch("/api/recipe/all")
-      .then(response => response.json())
-      .then(data => this.setState({ recipes: data.recipes }));
-  }
-  render() {
-    const { recipes } = this.state;
-    console.log(recipes);
-    return (
-      <div style={{ height: "75vh" }} className="container valign-wrapper">
-        <div className="row">
-          <div className="col s12 center-align">Recipes goes here</div>
-          {recipes.map(recipe => (
-            <li>{recipe.name}</li>
-          ))}
+  return (
+    <div className="section">
+      <div className="row">
+        <div className="col s12">
+          <Recipes allRecipes={recipes} />
         </div>
       </div>
-    );
-  }
-}
-export default Landing;
+    </div>
+  );
+};
+
+Landing.propTypes = state => ({
+  fetchAllRecipes: PropTypes.func.isRequired,
+  recipe: PropTypes.object.isRequired
+});
+
+const mapStateToProps = state => ({
+  recipe: state.recipe
+});
+
+export default connect(
+  mapStateToProps,
+  { fetchAllRecipes }
+)(Landing);

@@ -4,12 +4,23 @@ const mongoose = require("mongoose");
 const Recipe = require("../../models/recipe");
 
 router.get("/all", async (req, res) => {
-  let allRecipes = await Recipe.find({});
-  res.json({
-    success: true,
-    count: allRecipes.length,
-    recipes: allRecipes
-  });
+  try {
+    const recipes = await Recipe.find({});
+    res.json(recipes);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error Fetching All Recipes");
+  }
+});
+
+router.get("/detail/:id", async (req, res) => {
+  try {
+    const recipe = await Recipe.findOne({ _id: req.params.id });
+    res.json(recipe);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error Fetching Recipe By Id");
+  }
 });
 
 router.post("/create", async (req, res) => {
@@ -64,22 +75,6 @@ router.delete("/delete/:id", async (req, res) => {
       res.json({
         result: `Recipe with id: ${id} has been deleted successfully!`
       });
-    } else {
-      res.status(400).json({ result: "Recipe not found!" });
-    }
-  } else {
-    res.status(400).json({ result: "Invalid recipe id!" });
-  }
-});
-
-router.get("/detail/:id", async (req, res) => {
-  let id = req.params.id;
-
-  if (mongoose.Types.ObjectId.isValid(id)) {
-    let recipe = await Recipe.findOne({ _id: id });
-
-    if (recipe) {
-      res.json(recipe);
     } else {
       res.status(400).json({ result: "Recipe not found!" });
     }

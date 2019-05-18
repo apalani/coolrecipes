@@ -1,3 +1,6 @@
 export const GET_ERRORS = "GET_ERRORS";
 export const USER_LOADING = "USER_LOADING";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const GET_USER_NAME = "GET_USER_NAME";
+export const FETCH_ALL_RECIPES = "FETCH_ALL_RECIPES";
+export const GET_RECIPE_BY_ID = "GET_RECIPE_BY_ID";
